@@ -95,14 +95,16 @@ public class Chess extends Application {
         start.setOnMouseClicked(
                 event -> this.refresh(border)
         );
+
         control.getChildren().addAll(start);
         border.setBottom(control);
         border.setCenter(this.buildGrid());
         stage.setScene(new Scene(border, 400, 400));
         stage.setTitle(JOB4J);
         stage.setResizable(false);
-        stage.show();
         this.refresh(border);
+        stage.show();
+
     }
 
     private void refresh(final BorderPane border) {

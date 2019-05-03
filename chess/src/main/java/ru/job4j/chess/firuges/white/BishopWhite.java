@@ -23,7 +23,18 @@ public class BishopWhite implements Figure {
 
     @Override
     public Cell[] way(Cell source, Cell dest) {
-        return new Cell[] { dest };
+        Cell[] steps = new Cell[0];
+        for (int i = 0; i < 8; i++) {
+            if (
+                    (source.y == dest.y + i && source.x == dest.x + i)
+                    || (source.y == dest.y + i && source.x == dest.x - i)
+                    || (source.y == dest.y - i && source.x == dest.x + i)
+                    || (source.y == dest.y - i && source.x == dest.x - i)
+                    ) {
+                steps = new Cell[]{dest};
+            }
+        }
+        return steps;
     }
 
     @Override

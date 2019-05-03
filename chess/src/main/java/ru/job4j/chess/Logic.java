@@ -3,8 +3,6 @@ package ru.job4j.chess;
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
 
-import java.util.Optional;
-
 /**
  * //TODO add comments.
  *
@@ -22,12 +20,25 @@ public class Logic {
 
     public boolean move(Cell source, Cell dest) {
         boolean rst = false;
+        boolean busy = false;
         int index = this.findBy(source);
         if (index != -1) {
             Cell[] steps = this.figures[index].way(source, dest);
+            for (Cell step : steps) {
+                for (Figure figure : figures) {
+                    if (figure.position().equals(step)) {
+                        busy = true;
+                    }
+                }
+            }
+
             if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
                 rst = true;
                 this.figures[index] = this.figures[index].copy(dest);
+            }
+            if (busy) {
+                System.out.println("Ходить через фигуры нельзя!");
+                rst = false;
             }
         }
         return rst;
@@ -40,7 +51,7 @@ public class Logic {
         this.index = 0;
     }
 
-    private int findBy(Cell cell) {
+    private int findBy(Cell cell) { //по идее: принимает клетку и возвращает что за фигура на ней.
         int rst = -1;
         for (int index = 0; index != this.figures.length; index++) {
             if (this.figures[index] != null && this.figures[index].position().equals(cell)) {
